@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace ContosoPizza.DBFirst.Models;
+
+public partial class Order
+{
+    [Key]
+    public int Id { get; set; }
+
+    public DateTime OrderPlaced { get; set; }
+
+    public DateTime? OrderFulfilled { get; set; }
+
+    public int CustomerId { get; set; }
+
+    [ForeignKey("CustomerId")]
+    [InverseProperty("Orders")]
+    public virtual Customer Customer { get; set; } = null!;
+
+    [InverseProperty("Order")]
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+}
